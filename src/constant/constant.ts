@@ -1,7 +1,13 @@
 
 
 export const initStoreValue: object = {};
-export const serverPath = "http://localhost:8080"
+
+ if (process.env.NODE_ENV === `development`) {
+   serverPath = "http://localhost:8080"
+}else{
+    serverPath = "http://localhost:8080/blog"
+ }
+ export var serverPath
 
 export const jsonContentType = {
     'Content-Type': 'application/json'
