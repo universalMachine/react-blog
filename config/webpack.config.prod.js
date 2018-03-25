@@ -12,6 +12,7 @@ const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
+const Uglify = require("uglifyjs-webpack-plugin");
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -63,7 +64,8 @@ module.exports = {
     // Generated JS file names (with nested folders).
     // There will be one main bundle, and one file per asynchronous chunk.
     // We don't currently advertise code splitting but Webpack supports it.
-    filename: 'static/js/[name].[chunkhash:8].js',
+    //filename: 'static/js/[name].[chunkhash:8].js',
+      filename: 'bundle.js',
     chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
     // We inferred the "public path" (such as / or /my-project) from homepage.
     publicPath: publicPath,
@@ -270,7 +272,7 @@ module.exports = {
     // Otherwise React will be compiled in the very slow development mode.
     new webpack.DefinePlugin(env.stringified),
     // Minify the code.
-    new webpack.optimize.UglifyJsPlugin({
+/*   new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false,
         // Disabled because of an issue with Uglify breaking seemingly valid code:
@@ -289,7 +291,22 @@ module.exports = {
         ascii_only: true,
       },
       sourceMap: shouldUseSourceMap,
-    }),
+    }),*/
+
+
+      new Uglify({
+          uglifyOptions:{
+
+              compress: true,
+              warning: true,
+              output: {
+                  comments: false,
+                  // Turned on because emoji and regex is not minified properly using default
+                  // https://github.com/facebookincubator/create-react-app/issues/2488
+                  ascii_only: true,
+              },
+              sourceMap: shouldUseSourceMap,}}),
+
     // Note: this won't work without ExtractTextPlugin.extract(..) in `loaders`.
     new ExtractTextPlugin({
       filename: cssFilename,
@@ -321,7 +338,7 @@ module.exports = {
         }
         console.log(message);
       },
-      minify: true,
+      minify: false,
       // For unknown URLs, fallback to the index page
       navigateFallback: publicUrl + '/index.html',
       // Ignores URLs starting from /__ (useful for Firebase):
@@ -336,6 +353,7 @@ module.exports = {
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     // You can remove this if you don't use Moment.js:
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+
   ],
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.

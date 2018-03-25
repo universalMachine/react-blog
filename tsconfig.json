@@ -3,11 +3,11 @@
     //"outDir": "./dist/",
     //"allowSyntheticDefaultImports": true,
     "sourceMap": true,
-    "noImplicitAny": true,
+
     "module": "commonjs",
     "target": "es6",
-    "jsx": "react",
-    "noImplicitAny": true
+    "jsx": "react"
+
 
   },
   "include": [
