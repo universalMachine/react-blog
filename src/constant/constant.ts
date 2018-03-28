@@ -3,9 +3,11 @@
 export const initStoreValue: object = {};
 
  if (process.env.NODE_ENV === `development`) {
+     console.log(`env:${process.env.NODE_ENV}`)
    serverPath = "http://localhost:8080"
 }else{
-    serverPath = "http://localhost:8080/blog"
+     console.log(`env:${process.env.NODE_ENV}`)
+    serverPath = "http://learnjavaweb.com:8080/blog"
  }
  export var serverPath
 
