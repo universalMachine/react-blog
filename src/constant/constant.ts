@@ -7,7 +7,7 @@ export const initStoreValue: object = {};
    serverPath = "http://localhost:8080"
 }else{
      console.log(`env:${process.env.NODE_ENV}`)
-    serverPath = "http://v.learnjavaweb.com:8080/blog"
+    serverPath = "http://v.learnjavaweb.com:8080/blog-0.0.1-SNAPSHOT"
  }
  export var serverPath
 
