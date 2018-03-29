@@ -104,7 +104,7 @@ class AddBoard extends Component<any,any>{
                                   placeholder="这是一个有趣的版块哦！" name="boardDesc" onChange={this.handleChange}></textarea>
                     </div>
                     <div className="text-center">
-                        <button className="w-25 btn btn-success" onClick={() => onSubmit(this.state.board)}>增加版块
+                        <button className="w-25-up-sm w-75-down-sm btn btn-success" onClick={() => onSubmit(this.state.board)}>增加版块
                         </button>
                     </div>
                 </div>
