@@ -3,15 +3,26 @@ import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import  Loadable from 'react-loadable';
 class TopBar extends Component<any,any>{
+    constructor(props:any){
+        super(props)
+        this.state={
+            isCollapse: false
+        }
+    }
 
+    onToggleCollapse=()=>{
+        this.setState({
+            isCollapse:!this.state.isCollapse
+        })
+    }
     render(){
         return(
         <header>
             <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
                 <Link className="navbar-brand" to={"/"}>JavaWeb</Link>
-               {/* <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <button className="navbar-toggler" type="button" data-toggle="collapse" onClick={this.onToggleCollapse}>
                     <span className="navbar-toggler-icon"></span>
-                </button>*/}
+                </button>
                 <div className="collapse navbar-collapse" id="navbarCollapse">
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item active">
