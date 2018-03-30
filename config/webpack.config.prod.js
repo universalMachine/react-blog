@@ -64,8 +64,8 @@ module.exports = {
     // Generated JS file names (with nested folders).
     // There will be one main bundle, and one file per asynchronous chunk.
     // We don't currently advertise code splitting but Webpack supports it.
-    //filename: 'static/js/[name].[chunkhash:8].js',
-      filename: 'bundle.js',
+      filename: 'static/js/[name].[chunkhash:8].js',
+      //filename: 'bundle.js',
     chunkFilename: 'static/js/[name].[chunkhash:8].chunk.js',
     // We inferred the "public path" (such as / or /my-project) from homepage.
     publicPath: publicPath,
@@ -266,6 +266,12 @@ module.exports = {
         minifyURLs: true,
       },
     }),
+
+      new webpack.optimize.CommonsChunkPlugin({name:'common',filename:'static/js/common.[chunkhash:8].js'}),
+      //实现文件如果没有变化就不生成新的hash值
+      new webpack.optimize.CommonsChunkPlugin({
+          name:'manifest'
+      }),
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'production') { ... }. See `./env.js`.
     // It is absolutely essential that NODE_ENV was set to production here.

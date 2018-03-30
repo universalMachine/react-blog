@@ -1,15 +1,13 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const React = require("react");
-const ReactDOM = require("react-dom");
-require("./index.scss");
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import './index.scss';
 //import App from './App';
-require("bootstrap/dist/css/bootstrap.min.css");
-const registerServiceWorker_1 = require("./registerServiceWorker");
-const BlogApp_1 = require("./BlogApp");
-const react_redux_1 = require("react-redux");
-const Store_1 = require("./Store");
-ReactDOM.render(React.createElement(react_redux_1.Provider, { store: Store_1.default },
-    React.createElement(BlogApp_1.default, null)), document.getElementById('root'));
-registerServiceWorker_1.default();
+import 'bootstrap/dist/css/bootstrap.min.css';
+import registerServiceWorker from './registerServiceWorker';
+import BlogApp from "./BlogApp";
+import { Provider } from 'react-redux';
+import store from './Store';
+ReactDOM.render(React.createElement(Provider, { store: store },
+    React.createElement(BlogApp, null)), document.getElementById('root'));
+registerServiceWorker();
 //# sourceMappingURL=index.js.map

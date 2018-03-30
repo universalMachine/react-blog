@@ -1,20 +1,36 @@
 import * as React from "react"
-import RegisterForm from './register/views/register';
-import { view as LoginForm } from './login'
 import { BrowserRouter, Switch } from "react-router-dom";
 import { Route } from "react-router";
-import { PostList } from './post'
+import  * as Loadable from 'react-loadable';
+
+
+import RegisterForm from './register/views/register';
+import { view as LoginForm } from './login'
+
+
 import AddBoard from './board/views/addBoard';
-import BoardList from './board/views/BoardList';
-import TopBar from './TopBar';
+
+import { PostList } from './post'
+import {BoardList} from './board';
 import {TopicList} from './topic'
-import SimpleQuillEditor from './editor/views/SimpleQuillEditor';
+import {NotFound} from './NotFound';
+
+let loadableTopBar = Loadable({
+    loader: () => import( /* webpackChunkName: "topBar" */"./TopBar"),
+    loading: ()=>{
+        return <div>Loading...</div>
+    }
+})
+
+
+
 
 function BlogApp() {
     return (
         <BrowserRouter>
             <div>
-                <TopBar/>
+
+                {React.createElement(loadableTopBar)}
                 <div className="content-layout">
                     <Switch>
                         <Route exact path="/" component={BoardList}></Route>
@@ -24,7 +40,7 @@ function BlogApp() {
                         <Route exact  path="/board" component={BoardList}></Route>
                         <Route path="/board/topic" component={TopicList}></Route>
                         <Route path="/topic/:topicId/post" component={PostList}></Route>
-                        <Route path="/editor" component={SimpleQuillEditor}></Route>
+                        <Route component={NotFound}></Route>
                     </Switch>
                 </div>
             </div>

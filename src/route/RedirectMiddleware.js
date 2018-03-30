@@ -1,16 +1,14 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const actionTypes_1 = require("../register/actionTypes");
-const history_1 = require("history");
+import { REGISTER_FAIL } from '../register/actionTypes';
+import { createBrowserHistory } from 'history';
 const redirectMiddleware = ({ dispatch, getState }) => (next) => (action) => {
-    const browserHistory = history_1.createBrowserHistory();
+    const browserHistory = createBrowserHistory();
     switch (action.type) {
-        case actionTypes_1.REGISTER_FAIL: {
+        case REGISTER_FAIL: {
             browserHistory.push("/login");
         }
         default:
     }
     return next(action);
 };
-exports.default = redirectMiddleware;
+export default redirectMiddleware;
 //# sourceMappingURL=RedirectMiddleware.js.map

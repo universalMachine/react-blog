@@ -4,9 +4,14 @@
     //"allowSyntheticDefaultImports": true,
     "sourceMap": true,
 
-    "module": "commonjs",
+    //"module": "commonjs",
+    "module": "esnext",
+    "moduleResolution": "node",
+
     "target": "es6",
-    "jsx": "react"
+    "jsx": "react",
+
+    "allowSyntheticDefaultImports": true
 
 
   },

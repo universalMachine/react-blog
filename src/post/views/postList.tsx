@@ -7,7 +7,7 @@ import { AnyAction } from 'redux';
 import PageInfo from '../../constant/PageInfo';
 
 import InfinityScroll from '../../component/InfinityScroll';
-import { deletePost, fetchMainPost, fetchPost } from '../actions';
+import { deletePost, fetchMainPost, fetchPost, resetPost } from '../actions';
 import MainPostItem from './MainPostItem';
 import { formatDate } from '../../constant/time';
 import BreadcrumbItem from '../../component/BreadcrumbItem';
@@ -40,6 +40,9 @@ class TopicList extends Component<any,any>{
 
     isDiffTopic=(currentTopicId:number)=>{
         return this.props.storeState.posts.topicId != currentTopicId
+    }
+    componentWillMount(){
+        this.props.resetPost()
     }
     componentDidMount(){
 
@@ -101,6 +104,9 @@ const mapDispatchToProps = (dispatch:Dispatch<AnyAction>) => ({
     },
     deletePost: (postId: number) => {
         dispatch(deletePost(postId))
+    },
+    resetPost:()=>{
+        dispatch(resetPost())
     }
 
 })

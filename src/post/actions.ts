@@ -1,7 +1,7 @@
 import {
     MainPost_FETCH, MainPOST_FETCH_FAIL, MainPOST_FETCH_SUCCESS, POST_ADD, POST_ADD_FAIL,
     POST_ADD_SUCCESS, POST_DELETE, POST_DELETE_FAIL, POST_DELETE_SUCCESS, POST_FETCH, POST_FETCH_FAIL,
-    POST_FETCH_SUCCESS
+    POST_FETCH_SUCCESS, POST_RESET
 } from './actionTypes';
 import PageInfo from '../constant/PageInfo';
 import { Post } from './Post';
@@ -64,6 +64,9 @@ export const fetchPostFail = (res:any)=>({
 
 })
 
+export const resetPost = ()=>({
+    type:POST_RESET
+})
 
 
 export const deletePost = (postId: number)=>({

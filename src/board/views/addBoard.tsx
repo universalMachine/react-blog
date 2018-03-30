@@ -92,7 +92,7 @@ class AddBoard extends Component<any,any>{
               {/*  <ModalItem isShow={this.state.isFailModalShow} content="添加失败，是否要登录？" onClose={this.closeFailModal}
                            leftBtnContent="是的"
                            rightBtnContent="不要" rightClick={this.closeFailModal} leftClick={this.navToLogin}/>*/}
-                <div className="container mt-4 ">
+                <div className="container mt-4 pb-3 ">
                     <div className="form-group">
                         <label htmlFor="exampleFormControlInput1">版块名称</label>
                         <input className="form-control" id="exampleFormControlInput1" name="boardName"

@@ -1,7 +1,7 @@
 import * as React from "react"
 import { Component } from 'react';
 import { Link } from 'react-router-dom';
-
+import  Loadable from 'react-loadable';
 class TopBar extends Component<any,any>{
 
     render(){
