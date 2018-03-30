@@ -11,12 +11,11 @@ const BoardList = Loadable({
     loader: ()=> import(/* webpackChunkName: "BoardList" */"./views/BoardList").then(result=> {
         const wrappedStore:any = store
         const state = store.getState()
-
-
-        wrappedStore.resetStore(combineReducers({
-            ...store.originReducer,
-            board: reducer,
-    }),{
+        store.currentReducers = {
+            ...wrappedStore.currentReducers,
+            board: reducer
+        }
+        wrappedStore.resetStore(store.currentReducers,{
             ...state,
             board: initialState
 

@@ -55,7 +55,7 @@ const originReducer  = {
 
 
 const store= createStore(storeReducer,initStoreValue,storeEnhancers)
-const wrappedStore = {...store,originReducer:originReducer}
+const wrappedStore = {...store,originReducer:originReducer,currentReducers:originReducer}
 
 
 export default wrappedStore

@@ -12,10 +12,11 @@ const PostList = Loadable({
     loader: ()=> import(/* webpackChunkName: "postList" */"./views/postList").then(result=> {
         const wrappedStore:any = store
         const state = store.getState()
-        wrappedStore.resetStore(combineReducers({
-            ...wrappedStore.originReducer,
+        store.currentReducers = {
+            ...wrappedStore.currentReducers,
             post: reducer
-        }),{
+        }
+        wrappedStore.resetStore(store.currentReducers,{
             ...state,
             post: initialState
 

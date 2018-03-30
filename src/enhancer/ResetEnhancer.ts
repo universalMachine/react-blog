@@ -19,9 +19,10 @@ const resetReducerCreator = (reducer,resetState)=>(state,action)=>{
 const ResetEnhancer = (createStore:StoreCreator)=>(reducer,preloadedState,enhancer)=>{
     const store = createStore(reducer,preloadedState,enhancer)
 
-    const resetStore = (newReducer,newState)=>{
-        debugger
-        const resetReducer = resetReducerCreator(newReducer,newState)
+    const resetStore = (newReducers,newState)=>{
+
+      // wrappedStore.currentReducers = {...wrappedStore.currentReducers,newReducer}
+        const resetReducer = resetReducerCreator(combineReducers(newReducers),newState)
         store.replaceReducer(resetReducer)
         store.dispatch(resetAction(newState))
     }

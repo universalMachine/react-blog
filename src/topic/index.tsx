@@ -11,10 +11,11 @@ const TopicList = Loadable({
     loader: ()=> import(/* webpackChunkName: "topicList" */"./views/topicList").then(result=> {
         const wrappedStore:any = store
         const state = store.getState()
-        wrappedStore.resetStore(combineReducers({
-            ...store.originReducer,
+        store.currentReducers = {
+            ...wrappedStore.currentReducers,
             topic: reducer
-        }),{
+        }
+        wrappedStore.resetStore(store.currentReducers,{
             ...state,
             topic: initialState
 
@@ -23,6 +24,5 @@ const TopicList = Loadable({
     }),
     loading: ()=>{return <div>Loading...</div>}
     })
-
 
 export {reducer,actions,TopicList}
