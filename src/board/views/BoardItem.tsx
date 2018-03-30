@@ -5,6 +5,9 @@ import * as React from "react"
 class BoardItem extends Component<any,any>{
     constructor(props:any){
         super(props)
+        this.state ={
+            contentHtml : {__html:this.props.content}
+        }
     }
     render(){
         const {title,content,createTime,itemOnClick,deleteBoard,boardId} = this.props
@@ -22,7 +25,7 @@ class BoardItem extends Component<any,any>{
                         <a className="text-dark">{title}</a>
                     </h3>*/}
                     <div className="mb-1 text-muted">{createTime}</div>
-                    <p className="card-text mb-auto">{content}</p>
+                    <p className="card-text mb-auto" dangerouslySetInnerHTML={this.state.contentHtml}></p>
                    {/* <a href="#">Continue reading</a>*/}
                 </div>
             </div>
