@@ -1,13 +1,12 @@
 import * as React from "react"
-const ReactQuill = require('react-quill');
 import 'react-quill/dist/quill.snow.css';
 import 'react-quill/dist/quill.bubble.css';
 /*import 'react-quill/dist/quill.core.css';*/
-
 import './SimpleQuillEditor.scss'
 import { Component } from 'react';
-
 import { deepEqual } from '../../constant/compare';
+
+const ReactQuill = require('react-quill');
 class SimpleQuillEditor extends Component<any,any>{
     constructor (props:any) {
         super(props)
@@ -80,7 +79,7 @@ class SimpleQuillEditor extends Component<any,any>{
     }
     render () {
         return (
-            <div className="my-editor">
+            <div className="my-editor ">
                 <ReactQuill
                     name={this.props.name}
                     theme={this.state.theme}
@@ -90,6 +89,7 @@ class SimpleQuillEditor extends Component<any,any>{
                     formats={this.formats}
                     bounds={".my-editor"}
                     placeholder={this.props.placeholder}
+                    style={{fontSize:"1.5rem"}}
 
                 />
                 <div className="themeSwitcher">

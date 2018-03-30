@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { BOARD_ADD_FAIL, BOARD_ADD_SUCCESS } from '../actionTypes';
 import ModalItem from '../../component/ModalItem';
 import FeedBackItem from '../../component/FeedBackItem';
+import SimpleQuillEditor from '../../editor/views/SimpleQuillEditor';
 
 
 class AddBoard extends Component<any,any>{
@@ -37,7 +38,8 @@ class AddBoard extends Component<any,any>{
     }
 
     handleChange=(event:any)=>{
-        event.preventDefault()
+        if(event.preventDefault)
+            event.preventDefault()
 
         const {name,value} = event.currentTarget
 
@@ -100,8 +102,9 @@ class AddBoard extends Component<any,any>{
                     </div>
                     <div className="form-group">
                         <label htmlFor="exampleFormControlTextarea1">版块描述</label>
-                        <textarea className="form-control" id="exampleFormControlTextarea1" rows={6}
-                                  placeholder="这是一个有趣的版块哦！" name="boardDesc" onChange={this.handleChange}></textarea>
+                        <SimpleQuillEditor name="boardDesc" placeholder="创建有用的版块呀" handleChange={(event:any)=>this.handleChange(event)} />
+                       {/* <textarea className="form-control" id="exampleFormControlTextarea1" rows={6}
+                                  placeholder="这是一个有趣的版块哦！" name="boardDesc" onChange={this.handleChange}></textarea>*/}
                     </div>
                     <div className="text-center">
                         <button className="w-25-up-sm w-75-down-sm btn btn-success" onClick={() => onSubmit(this.state.board)}>增加版块
