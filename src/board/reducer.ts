@@ -3,12 +3,12 @@ import {
     BOARD_ADD_FAIL, BOARD_ADD_STATUS_RESET, BOARD_ADD_SUCCESS, BOARD_DELETE_SUCCESS, BOARD_FETCH, BOARD_FETCH_FAIL,
     BOARD_FETCH_SUCCESS, BOARD_INIT_PAGE_INFO
 } from './actionTypes';
-import PageInfo from '../constant/PageInfo';
+
 import { Board } from './Board';
 
 const complete = "complete"
-
-export default (state:any={boards:[],addStatus:"default",addMessage:"",pageInfo:{pageSize:1,pageNum:1},fetchStatus : "none",fetchResult:{}}, action:AnyAction)=>{
+export const initialState = {boards:[],addStatus:"default",addMessage:"",pageInfo:{pageSize:1,pageNum:1},fetchStatus : "none",fetchResult:{}}
+export default (state:any= initialState, action:AnyAction)=>{
     switch (action.type){
         case BOARD_ADD_SUCCESS:
             return {...state,boards: [...state.boards,action.board],addStatus: BOARD_ADD_SUCCESS,addMessage:action.res.message}

@@ -16,8 +16,9 @@ import BreadcrumbItem from '../../component/BreadcrumbItem';
 
 class BoardList extends Component<any,any>{
 
-    constructor(props:any){
-        super(props)
+    constructor(props:any,context:any){
+        super(props,context)
+
         this.state={
             pageInfo :{
                 pageNum: 0,
@@ -37,7 +38,7 @@ class BoardList extends Component<any,any>{
     }
 
     componentDidMount(){
-        console.log("didmount")
+        //console.log("didmount")
         if(this.isBoardEmpty()){
             this.props.initPageInfo(this.state.pageInfo)
             this.props.fetchBoards({...this.state.pageInfo,pageNum:this.state.pageInfo.pageNum+1})
@@ -46,7 +47,7 @@ class BoardList extends Component<any,any>{
     }
 
      isBoardEmpty(){
-        console.log("is Board Empty?")
+        //console.log("is Board Empty?")
         return this.props.store.boards.length == 0
     }
     render(){

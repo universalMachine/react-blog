@@ -1,15 +1,11 @@
 import * as React from   "react"
-import {
-    FormGroup, FormControl, ControlLabel, HelpBlock, Checkbox, Button, Radio, Grid, Row,
-    Col
-} from "react-bootstrap";
+import { FormGroup, FormControl, ControlLabel, HelpBlock, Checkbox, Button, Radio, Grid, Row, Col } from "react-bootstrap";
 import { Component, FormEvent, SyntheticEvent } from 'react';
 import "./register.scss"
 import { Action, Dispatch } from 'redux';
 import { addRegister } from '../actions';
 import { User } from '../User';
 import { connect } from 'react-redux';
-
 
 
 function FieldGroup({ id , label , help, ...props }:any) {
@@ -21,6 +17,7 @@ function FieldGroup({ id , label , help, ...props }:any) {
         </FormGroup>
     );
 }
+
 
 interface Props{
     onRegister: (user:User)=>void;

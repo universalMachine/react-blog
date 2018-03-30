@@ -39,9 +39,9 @@ const fetchTopic  = (topics:any,response:any)=>{
         }
 }
 
+export const initialState = {topics:{boardId:null,topicList:[]},boardId:0,addStatus:"default",addMessage:"",pageInfo:{pageSize:5,pageNum:0},fetchStatus : "none",fetchResult:{}}
 
-
-export default (state:any={topics:{boardId:null,topicList:[]},boardId:0,addStatus:"default",addMessage:"",pageInfo:{pageSize:5,pageNum:0},fetchStatus : "none",fetchResult:{}}, action:AnyAction)=>{
+export default (state:any=initialState, action:AnyAction)=>{
     switch (action.type){
         case TOPIC_ADD_SUCCESS:
             //console.dir(action.res.data)

@@ -64,7 +64,7 @@ const deletePost = (originPosts: any, res: any) => {
     }
 }
 
-const initialState = {
+export const initialState = {
     posts: {
         topicId: "empty", mainPost: [], replyPosts: []
     },

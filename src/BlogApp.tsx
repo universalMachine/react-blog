@@ -4,16 +4,16 @@ import { Route } from "react-router";
 import  * as Loadable from 'react-loadable';
 
 
-import RegisterForm from './register/views/register';
-import { view as LoginForm } from './login'
 
-
-import AddBoard from './board/views/addBoard';
 
 import { PostList } from './post'
 import {BoardList} from './board';
 import {TopicList} from './topic'
 import {NotFound} from './NotFound';
+
+import {RegisterForm} from './register';
+import { LoginForm } from './login'
+import {AddBoard} from './board';
 
 let loadableTopBar = Loadable({
     loader: () => import( /* webpackChunkName: "topBar" */"./TopBar"),
