@@ -2,11 +2,12 @@ import * as React from "react"
 import { Component } from 'react';
 import { Link } from 'react-router-dom';
 import  Loadable from 'react-loadable';
+
 class TopBar extends Component<any,any>{
     constructor(props:any){
         super(props)
         this.state={
-            isCollapse: false
+            isCollapse: true
         }
     }
 
@@ -16,6 +17,7 @@ class TopBar extends Component<any,any>{
         })
     }
     render(){
+        const collapseClassname =this.state.isCollapse?["collapse ","navbar-collapse "]:["collapse ","show "]
         return(
         <header>
             <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -23,11 +25,12 @@ class TopBar extends Component<any,any>{
                 <button className="navbar-toggler" type="button" data-toggle="collapse" onClick={this.onToggleCollapse}>
                     <span className="navbar-toggler-icon"></span>
                 </button>
-                <div className="collapse navbar-collapse" id="navbarCollapse">
+                <div className={collapseClassname.join(" ")}>
                     <ul className="navbar-nav mr-auto">
+
                         <li className="nav-item active">
-                            {/*<a className="nav-link" href="#">首页 <span className="sr-only">(current)</span></a>*/}
-                            <Link className="text-white" to="/board">首页</Link>
+                            <Link className="navbar-brand" to={"/login"}>登录</Link>
+                         {/*   <Link className="text-white" to="/board">首页</Link>*/}
                         </li>
                    {/*     <li className="nav-item">
                             <a className="nav-link" href="#">Link</a>
