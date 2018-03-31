@@ -10,7 +10,10 @@ const ReactQuill = require('react-quill');
 class SimpleQuillEditor extends Component<any,any>{
     constructor (props:any) {
         super(props)
-        this.state = { editorHtml: '', theme: 'bubble' }
+        this.state = {
+            initialContent : `<p>&nbsp;&nbsp;${this.props.placeholder}</p>`,
+            editorHtml:  `<p>&nbsp;&nbsp;${this.props.placeholder}</p>`,
+            theme: 'bubble' }
         this.handleChange = this.handleChange.bind(this)
         this.handleEventChange = this.handleEventChange.bind(this)
     }
@@ -56,7 +59,9 @@ class SimpleQuillEditor extends Component<any,any>{
         'link', 'image', 'video'
     ]
     handleEventChange = (content:any, delta:any, source:any, editor:any)=>{
-       // console.dir(this)
+        this.editor = editor
+        this.handleChange(content)
+        console.log(`content:${content}`)
         this.props.handleChange({currentTarget:{name:this.props.name,value:content}})
     }
 
@@ -66,16 +71,72 @@ class SimpleQuillEditor extends Component<any,any>{
             this.props.resetClearContent()
             this.setState({
                 ...this.state,
-                editorHtml: ""
+                editorHtml: this.state.initialContent
             })
         }
     }
 
     shouldComponentUpdate(nextProps:any,nextState:any,nextContext:any){
+        //debugger
         if(deepEqual(nextProps,this.props)&&deepEqual(nextState,this.state)){
             return false
         }else
             return true;
+    }
+
+    editor:any
+
+
+
+    isEmpty=()=>{
+        const  emptyStrs=["","<p><br></p>","<br>","f","<p>&nbsp;&nbsp;</p>",this.state.initialContent]
+        return emptyStrs.indexOf(this.state.editorHtml) != -1
+    }
+
+    consoleKeyup = (event:any)=>{
+        console.dir(event.key )
+        //event.preventDefault()
+
+    }
+    onkeyPress = (event:any)=>{
+
+
+    }
+    consoleKeyDown = (event:any)=>{
+        //debugger
+
+
+        //console.log(`editorHtml:${this.state.editorHtml}`)
+        if(event.key === "Backspace"&&this.isEmpty()){
+            event.preventDefault()
+            this.setState({
+                ...this.state,
+                editorHtml: this.state.initialContent
+            })
+        }
+
+        if(event.key !== "Backspace"&&this.isEmpty()){
+
+           // debugger
+           this.setState({
+                ...this.state,
+                editorHtml: "<p>&nbsp;&nbsp;</p>"
+            })
+
+        }
+        //debugger
+
+    }
+
+    onFocus=(range, source, editor)=>{
+
+
+        if(editor.getHTML() == this.state.initialContent){
+            this.setState({
+                ...this.state,
+                editorHtml: "<p>&nbsp;&nbsp;</p>"
+            })
+        }
     }
     render () {
         return (
@@ -90,8 +151,16 @@ class SimpleQuillEditor extends Component<any,any>{
                     bounds={".my-editor"}
                     placeholder={this.props.placeholder}
                     style={{fontSize:"1.5rem"}}
+                    onKeyUp={this.consoleKeyup}
+                    onKeyDown={this.consoleKeyDown}
+                    onKeyPress = {this.onkeyPress}
+                    onFocus={this.onFocus}
 
-                />
+                >
+                    <div className="wo">
+
+                    </div>
+                </ReactQuill>
                 <div className="themeSwitcher">
                     <label className="mr-2">模式 </label>
                     <select className="pl-1 select" onChange={(e) =>
