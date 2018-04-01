@@ -10,7 +10,7 @@ export const deepEqual =  (x:any, y:any)=>{
             if (y.hasOwnProperty(prop))
             {
                 if(typeof x[prop] == 'function' && typeof y[prop] == 'function'){
-                    console.log("function")
+                   // console.log("function")
                    if(x[prop].toString() == y[prop].toString())
                     continue
                    else

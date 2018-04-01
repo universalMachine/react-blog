@@ -3,8 +3,9 @@ import 'react-quill/dist/quill.snow.css';
 import 'react-quill/dist/quill.bubble.css';
 /*import 'react-quill/dist/quill.core.css';*/
 import './SimpleQuillEditor.scss'
-import { Component } from 'react';
+import { cloneElement, Component } from 'react';
 import { deepEqual } from '../../constant/compare';
+import { cloneDiff, deepCloneObject, shallowClone } from '../../constant/constant';
 
 const ReactQuill = require('react-quill');
 class SimpleQuillEditor extends Component<any,any>{
@@ -12,19 +13,26 @@ class SimpleQuillEditor extends Component<any,any>{
         super(props)
         this.state = {
             initialContent : `<p>&nbsp;&nbsp;${this.props.placeholder}</p>`,
+            emptyContent: `<p>&nbsp;&nbsp;</p>`,
             editorHtml:  `<p>&nbsp;&nbsp;${this.props.placeholder}</p>`,
+            shouldRender: false,
+            //initialContent :  `<p>&nbsp;&nbsp;</p>`,
+            //editorHtml:  `<p>&nbsp;&nbsp;</p>`,
             theme: 'bubble' }
         this.handleChange = this.handleChange.bind(this)
         this.handleEventChange = this.handleEventChange.bind(this)
     }
 
     handleChange (html:any) {
-        this.setState({ editorHtml: html });
+        this.setState({ editorHtml: html,shouldRender:false });
     }
 
     handleThemeChange (newTheme:any) {
         if (newTheme === "core") newTheme = null;
-        this.setState({ theme: newTheme })
+        this.setState({ theme: newTheme,
+            shouldRender: true
+
+        })
     }
 
     /*
@@ -70,19 +78,14 @@ class SimpleQuillEditor extends Component<any,any>{
         if(nextProps.isClearContent){
             this.props.resetClearContent()
             this.setState({
-                ...this.state,
-                editorHtml: this.state.initialContent
+
+                editorHtml: this.state.initialContent,
+                shouldRender: true
             })
         }
     }
 
-    shouldComponentUpdate(nextProps:any,nextState:any,nextContext:any){
-        //debugger
-        if(deepEqual(nextProps,this.props)&&deepEqual(nextState,this.state)){
-            return false
-        }else
-            return true;
-    }
+
 
     editor:any
 
@@ -94,50 +97,155 @@ class SimpleQuillEditor extends Component<any,any>{
     }
 
     consoleKeyup = (event:any)=>{
-        console.dir(event.key )
-        //event.preventDefault()
+/*        if(event.key !== "Backspace"&&this.state.editorHtml == this.state.initialContent){
 
+            // 防止首字母被渲染
+            this.setState({
+               shouldRender: false
+            })
+
+
+
+
+        }*/
+
+        console.log("keyup")
+        console.dir(event)
     }
     onkeyPress = (event:any)=>{
 
-
+        console.log("keypress")
     }
     consoleKeyDown = (event:any)=>{
-        //debugger
 
 
-        //console.log(`editorHtml:${this.state.editorHtml}`)
         if(event.key === "Backspace"&&this.isEmpty()){
+
             event.preventDefault()
             this.setState({
-                ...this.state,
-                editorHtml: this.state.initialContent
+                shouldRender: true,
+                editorHtml: this.state.emptyContent
             })
         }
+/*
 
-        if(event.key !== "Backspace"&&this.isEmpty()){
+        console.log("keydown")
 
-           // debugger
-           this.setState({
-                ...this.state,
-                editorHtml: "<p>&nbsp;&nbsp;</p>"
-            })
 
-        }
-        //debugger
+        if(event.key !== "Backspace"&&this.state.editorHtml == this.state.initialContent){
+
+            if(!event.nativeEvent.isRedispatch) {
+                const nativeEvent = event.nativeEvent
+                let newKeyDownEvent: any = new KeyboardEvent(event.nativeEvent.type, event.nativeEvent);
+
+                /!*newKeyDownEvent.initKeyboardEvent(
+                    nativeEvent.type,
+                    nativeEvent.bubbles,
+                    nativeEvent.cancelable,
+                    nativeEvent.view,
+                    nativeEvent.key,
+                    nativeEvent.key,
+                    nativeEvent.key
+
+                )*!/
+                Object.defineProperty(newKeyDownEvent, 'keyCode', {
+                    get: function () {
+                        return this.keyCodeVal;
+                    }
+                });
+
+                Object.defineProperty(newKeyDownEvent, 'which', {
+                    get: function () {
+                        return this.keyCodeVal;
+                    }
+                });
+
+                var initMethod = typeof newKeyDownEvent.initKeyboardEvent !== 'undefined' ? "initKeyboardEvent" : "initKeyEvent";
+
+                newKeyDownEvent[initMethod](
+                    nativeEvent.type,// event type : keydown, keyup, keypress
+                    nativeEvent.bubbles,// bubbles
+                    nativeEvent.cancelable,// cancelable
+                    nativeEvent.view,// viewArg: should be window
+                    nativeEvent.ctrlKey, // ctrlKeyArg
+                    nativeEvent.altKey, // altKeyArg
+                    nativeEvent.shiftKey, // shiftKeyArg
+                    nativeEvent.metaKey, // metaKeyArg
+                    nativeEvent.keyCode, // keyCodeArg : unsigned long the virtual key code, else 0
+                    nativeEvent.charCode // charCodeArgs : unsigned long the Unicode character associated with the depressed key, else 0
+                );
+
+                newKeyDownEvent.keyCodeVal = nativeEvent.keyCode;
+
+
+                newKeyDownEvent.isRedispatch = true
+
+                event.preventDefault()
+                this.setState({
+                    editorHtml: "<p>&nbsp;&nbsp;</p>",
+                    shouldRender: true
+                })
+
+                event.persist()
+                const currentTarget = event.currentTarget
+                this.afterRender = () => {
+                    // debugger
+                    currentTarget.dispatchEvent(newKeyDownEvent)
+                }
+
+            }}
+*/
 
     }
 
     onFocus=(range, source, editor)=>{
 
-
         if(editor.getHTML() == this.state.initialContent){
             this.setState({
-                ...this.state,
-                editorHtml: "<p>&nbsp;&nbsp;</p>"
+
+                editorHtml: "<p>&nbsp;&nbsp;</p>",
+                shouldRender: true
             })
+
+
+        }
+
+
+    }
+
+    afterRender = undefined
+
+    shouldComponentUpdate(nextProps:any,nextState:any,nextContext:any){
+        console.dir(nextState)
+        if(nextState.shouldRender){
+
+            this.setState({
+                shouldRender: false
+            })
+            console.log("shouldRender")
+            return true
+        }
+        if(deepEqual(nextProps,this.props)){
+            console.log("dont need render")
+            return false
+        }
+
+
+        return true;
+    }
+
+    componentDidUpdate(prevProps:any){
+        //debugger
+        if(this.afterRender){
+          //  debugger
+            console.log("afterRender")
+            this.afterRender()
+
+            //只执行一次
+            this.afterRender=null
         }
     }
+
     render () {
         return (
             <div className="my-editor ">
